@@ -54,6 +54,19 @@ jobs:
           images: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
             ${{ env.IMAGE_NAME }}
+          tags: |
+            # https://github.com/docker/metadata-action#tags-input
+            # set latest tag for master or mian branch
+            type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'master') }}
+            type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'main') }}
+
+            # branch event
+            type=ref,event=branch
+            # pull request event
+            type=ref,event=pr
+
+            # raw version like v1.2.0
+            type=semver,pattern={{raw}}
 
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
