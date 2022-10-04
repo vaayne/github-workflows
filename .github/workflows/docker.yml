@@ -3,8 +3,6 @@ name: Docker
 on:
   workflow_call:
     secrets:
-      GITHUB_TOKEN:
-        required: true
       DOCKERHUB_USERNAME:
         required: true
       DOCKERHUB_TOKEN:
